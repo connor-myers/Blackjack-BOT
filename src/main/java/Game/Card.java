@@ -22,4 +22,12 @@ public class Card {
         this.suit = suit;
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        if (type != Type.NUMERIC) {
+            return String.format("%s of %s", type.toString(), suit.toString());
+        }
+        return String.format("%d of %s", value, suit.toString());
+    }
 }

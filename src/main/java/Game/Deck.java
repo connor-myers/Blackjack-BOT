@@ -22,18 +22,14 @@ public class Deck {
         File deck = new File(deckFilePath);
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(deck)));
+            br = new BufferedReader(new FileReader(deckFilePath));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         try {
-            String line;
-            while (true) {
-                line = br.readLine();
-                if (line == null) {
-                    break;
-                }
-                Card card = decodeCardFromString(line);
+            String[] cards = br.readLine().split(",");
+            for (String codedCard : cards) {
+                availableCards.add(decodeCardFromString(codedCard));
             }
         } catch (IOException e) {
             e.printStackTrace();
