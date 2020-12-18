@@ -1,8 +1,8 @@
 package Game;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 import Game.Card.*;
 
 import static Game.Card.Suit.CLUBS;
@@ -16,6 +16,14 @@ public class Deck {
         availableCards = new ArrayList<>();
         dealtCards = new ArrayList<>();
         loadCardsFromDeck(deckFilePath);
+        Collections.shuffle(availableCards); // make sure they're in a weird order
+    }
+
+    public Card dealCard() {
+        Card card = availableCards.get(0);
+        availableCards.remove(0);
+        dealtCards.add(card);
+        return card;
     }
 
     private void loadCardsFromDeck(String deckFilePath) {
