@@ -35,17 +35,36 @@ public class DeckDAO {
             Statement st = con.createStatement();
             st.executeUpdate(query);
         } catch (SQLException e) {
-            System.out.println(query);
             e.printStackTrace();
         }
     }
 
-    public Deck retrieveDeck(int deckId) {
-        return null;
+    public static Deck retrieveDeck(int deckId) {
+        Deck deck = null;
+        String query = String.format("SELECT * FROM Deck WHERE DeckId = %d", deckId);
+        Connection con = DatabaseManager.getConnection();
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            rs.next();
+            deck = new Deck(deckId, rs.getString("AvailableCards"), rs.getString("DealtCards"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return deck;
     }
 
-    public void updateDeck(Deck deck) {
-
+    public static void updateDeck(Deck deck) {
+        String query = String.format("UPDATE Deck SET AvailableCards=\"%s\", DealtCards=\"%s\" WHERE DeckId = %d",
+                deck.availableCardsToString(), deck.dealtCardsToString(), deck.getId());
+        Connection con = DatabaseManager.getConnection();
+        try {
+            Statement st = con.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

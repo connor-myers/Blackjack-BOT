@@ -10,7 +10,9 @@ import java.sql.Statement;
 
 public class Main {
     public static void main (String[] args) {
-        Deck deck = new Deck(DeckDAO.getNextDeckId(), "standard.deck");
-        DeckDAO.addDeck(deck);
+        //Deck deck = new Deck(DeckDAO.getNextDeckId(), "standard.deck");
+        Deck deck = DeckDAO.retrieveDeck(2);
+        System.out.println(deck.getAvailableCards());
+        System.out.println(deck.getDealtCards());
     }
 }

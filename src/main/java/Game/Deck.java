@@ -21,6 +21,28 @@ public class Deck {
         Collections.shuffle(this.availableCards); // make sure they're in a weird order
     }
 
+    public Deck(int id, String availableCards, String dealtCards) {
+        this.id = id;
+        this.availableCards = new ArrayList<>();
+        this.dealtCards = new ArrayList<>();
+
+        String[] available = availableCards.split(",");
+        for (String codedCard : available) {
+            if (codedCard.equals("null")) {
+                continue;
+            }
+            this.availableCards.add(decodeCardFromString(codedCard));
+        }
+
+        String[] dealt = dealtCards.split(",");
+        for (String codedCard : dealt) {
+            if (codedCard.equals("null")) {
+                continue;
+            }
+            this.dealtCards.add(decodeCardFromString(codedCard));
+        }
+    }
+
     public Card dealCard() {
         Card card = availableCards.get(0);
         availableCards.remove(0);
@@ -104,5 +126,13 @@ public class Deck {
 
     public int getId() {
         return id;
+    }
+
+    public List<Card> getAvailableCards() {
+        return availableCards;
+    }
+
+    public List<Card> getDealtCards() {
+        return dealtCards;
     }
 }
