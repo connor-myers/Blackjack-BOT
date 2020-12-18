@@ -17,10 +17,11 @@ public class Card {
     private Suit suit;
     private Type type;
 
-    public Card(int value, Suit suit, Type type) {
+    public Card(int value, Suit suit, Type type, String code) {
         this.value = value;
         this.suit = suit;
         this.type = type;
+        this.sprite = new Sprite("src/main/resources/Images/Cards/" + code + ".png");
     }
 
     @Override

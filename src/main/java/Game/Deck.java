@@ -36,9 +36,9 @@ public class Deck {
         }
     }
 
-    private Card decodeCardFromString(String string) {
-        char suitCode = string.charAt(0);
-        String valCode = string.substring(1);
+    private Card decodeCardFromString(String code) {
+        char suitCode = code.charAt(0);
+        String valCode = code.substring(1);
 
         Suit suit;
         switch (suitCode) {
@@ -68,6 +68,6 @@ public class Deck {
             default -> throw new IllegalStateException("Unexpected value: " + valCode.charAt(0));
         }
         
-        return new Card(val, suit, type);
+        return new Card(val, suit, type, code);
     }
 }
