@@ -17,9 +17,9 @@ public class Card {
     private Suit suit;
     private Type type;
 
-    public Card(int value, String suit, String type) {
+    public Card(int value, Suit suit, Type type) {
         this.value = value;
-        this.suit = Suit.valueOf(suit);
-        this.type = Type.valueOf(type);
+        this.suit = suit;
+        this.type = type;
     }
 }
