@@ -9,14 +9,16 @@ import static Game.Card.Suit.CLUBS;
 
 public class Deck {
     public static int NUM_CARDS = 52;
+    private int id;
     private List<Card> availableCards;
     private List<Card> dealtCards;
 
-    public Deck(String deckFilePath) {
-        availableCards = new ArrayList<>();
-        dealtCards = new ArrayList<>();
+    public Deck(int id, String deckFilePath) {
+        this.id = id;
+        this.availableCards = new ArrayList<>();
+        this.dealtCards = new ArrayList<>();
         loadCardsFromDeck(deckFilePath);
-        Collections.shuffle(availableCards); // make sure they're in a weird order
+        Collections.shuffle(this.availableCards); // make sure they're in a weird order
     }
 
     public Card dealCard() {
@@ -77,5 +79,30 @@ public class Deck {
         }
         
         return new Card(val, suit, type, code);
+    }
+
+    public String availableCardsToString() {
+        StringBuilder sb = new StringBuilder();
+        for (Card card : availableCards) {
+            sb.append(card.toString()).append(",");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        return sb.toString();
+    }
+
+    public String dealtCardsToString() {
+        if (dealtCards.size() == 0) {
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Card card : dealtCards) {
+            sb.append(card.toString()).append(",");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        return sb.toString();
+    }
+
+    public int getId() {
+        return id;
     }
 }

@@ -1,3 +1,4 @@
+import Database.DeckDAO;
 import Game.Deck;
 import Managers.DatabaseManager;
 
@@ -9,8 +10,7 @@ import java.sql.Statement;
 
 public class Main {
     public static void main (String[] args) {
-        Deck deck = new Deck("standard.deck");
-
-
+        Deck deck = new Deck(DeckDAO.getNextDeckId(), "standard.deck");
+        DeckDAO.addDeck(deck);
     }
 }

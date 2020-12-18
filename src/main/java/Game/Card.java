@@ -27,8 +27,8 @@ public class Card {
     @Override
     public String toString() {
         if (type != Type.NUMERIC) {
-            return String.format("%s of %s", type.toString(), suit.toString());
+            return String.format("%s%c", suit.toString().charAt(0), type.toString().charAt(0));
         }
-        return String.format("%d of %s", value, suit.toString());
+        return String.format("%c%d", suit.toString().charAt(0), value);
     }
 }
