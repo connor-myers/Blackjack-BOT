@@ -1,18 +1,11 @@
 import Database.DeckDAO;
-import Game.Deck;
-import Managers.DatabaseManager;
-
-import javax.xml.transform.Result;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import Game.Cards.Card;
+import Game.Cards.Deck;
 
 public class Main {
     public static void main (String[] args) {
-        //Deck deck = new Deck(DeckDAO.getNextDeckId(), "standard.deck");
-        Deck deck = DeckDAO.retrieveDeck(2);
+        Deck deck = new Deck(DeckDAO.getNextDeckId(), "standard.deck");
         System.out.println(deck.getAvailableCards());
-        System.out.println(deck.getDealtCards());
+
     }
 }

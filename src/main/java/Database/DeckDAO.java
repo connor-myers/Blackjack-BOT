@@ -1,6 +1,6 @@
 package Database;
 
-import Game.Deck;
+import Game.Cards.Deck;
 import Managers.DatabaseManager;
 
 import java.sql.Connection;
@@ -29,7 +29,7 @@ public class DeckDAO {
 
     public static void addDeck(Deck deck) {
         String query = String.format("INSERT INTO `Deck`(`DeckId`,`AvailableCards`,`DealtCards`) VALUES (%d, \"%s\", \"%s\");",
-                deck.getId(), deck.availableCardsToString(), deck.dealtCardsToString());
+                deck.getId(), Deck.cardsToString(deck.getAvailableCards()), Deck.cardsToString(deck.getDealtCards()));
         Connection con = DatabaseManager.getConnection();
         try {
             Statement st = con.createStatement();
@@ -57,7 +57,7 @@ public class DeckDAO {
 
     public static void updateDeck(Deck deck) {
         String query = String.format("UPDATE Deck SET AvailableCards=\"%s\", DealtCards=\"%s\" WHERE DeckId = %d",
-                deck.availableCardsToString(), deck.dealtCardsToString(), deck.getId());
+                Deck.cardsToString(deck.getAvailableCards()), Deck.cardsToString(deck.getDealtCards()), deck.getId());
         Connection con = DatabaseManager.getConnection();
         try {
             Statement st = con.createStatement();
