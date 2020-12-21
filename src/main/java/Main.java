@@ -7,14 +7,7 @@ import Game.Game;
 
 public class Main {
     public static void main (String[] args) {
-//        Game game = new Game(5);
-//        GameDAO.saveGame(game);
-//        Game game = GameDAO.loadGame(5);
-//        //System.out.println(DealerDAO.getNextDealerId());
-//        Dealer dealer = new Dealer(DealerDAO.getNextDealerId());
-//        DealerDAO.saveDealer(dealer);
-
-
-
+        Game game = new Game(GameDAO.getNextGameId());
+        game.save();
     }
 }

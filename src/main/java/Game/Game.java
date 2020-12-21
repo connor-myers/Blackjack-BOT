@@ -1,6 +1,8 @@
 package Game;
 
+import Database.DealerDAO;
 import Database.DeckDAO;
+import Database.GameDAO;
 import Database.PlayerDAO;
 import Game.Agents.Dealer;
 import Game.Agents.Player;
@@ -24,9 +26,9 @@ public class Game {
     // creating a new game
     public Game(int gameId) {
         this.gameId = gameId;
-        this.deck = new Deck(DeckDAO.getNextDeckId(), "cards.deck");
+        this.deck = new Deck(DeckDAO.getNextDeckId(), "standard.deck");
         this.player = new Player(PlayerDAO.getNextPlayerId());
-        this.dealer = new Dealer(44); // temp
+        this.dealer = new Dealer(DealerDAO.getNextDealerId()); // temp
         this.turn = Turn.DEALER_TURN;
         this.numTurns = 0;
         this.gameOver = false;
@@ -40,6 +42,20 @@ public class Game {
         this.turn = turn;
         this.numTurns = numTurns;
         this.gameOver = gameOver;
+    }
+
+    public void update() {
+        DeckDAO.updateDeck(this.deck);
+        PlayerDAO.updatePlayer(this.player);
+        DealerDAO.updateDealer(this.dealer);
+        GameDAO.updateGame(this);
+    }
+
+    public void save() {
+        DeckDAO.saveDeck(this.deck);
+        PlayerDAO.savePlayer(this.player);
+        DealerDAO.saveDealer(this.dealer);
+        GameDAO.saveGame(this);
     }
 
     public int getGameId() {

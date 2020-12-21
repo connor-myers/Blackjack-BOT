@@ -28,7 +28,7 @@ public class DeckDAO {
         return val;
     }
 
-    public static void addDeck(Deck deck) {
+    public static void saveDeck(Deck deck) {
         String query = String.format("INSERT INTO `Deck`(`DeckId`,`AvailableCards`,`DealtCards`) VALUES (%d, \"%s\", \"%s\");",
                 deck.getId(), Deck.cardsToString(deck.getAvailableCards()), Deck.cardsToString(deck.getDealtCards()));
         Connection con = DatabaseManager.getConnection();

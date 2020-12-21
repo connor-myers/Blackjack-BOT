@@ -10,6 +10,25 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class GameDAO {
+
+    public static int getNextGameId() {
+        int val = -1;
+        Connection con = DatabaseManager.getConnection();
+        try {
+            Statement st = con.createStatement();
+            String query = "SELECT MAX(GameId) + 1 FROM Game;";
+            ResultSet rs = st.executeQuery(query);
+            rs.next();
+            val = rs.getInt("MAX(GameId) + 1");
+            rs.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return val;
+    }
+
     public static void saveGame(Game game) {
         String query = String.format("INSERT INTO `Game`(`GameId`,`DeckId`,`PlayerId`,`DealerId`,`Turn`,`NumTurns`,`GameOver`)" +
                         " VALUES (%d, %d, %d, %d, %d, %d, %d);",
