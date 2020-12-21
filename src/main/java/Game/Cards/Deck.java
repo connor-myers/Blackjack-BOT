@@ -11,9 +11,9 @@ import static Game.Cards.Card.decodeCardFromString;
 
 public class Deck {
     public static int NUM_CARDS = 52;
-    private int id;
-    private List<Card> availableCards;
-    private List<Card> dealtCards;
+    private final int id;
+    private final List<Card> availableCards;
+    private final List<Card> dealtCards;
 
     public Deck(int id, String deckFilePath) {
         this.id = id;

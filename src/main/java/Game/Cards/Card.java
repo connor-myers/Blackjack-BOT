@@ -6,18 +6,21 @@ import static Game.Cards.Card.Suit.CLUBS;
 
 public class Card {
 
-    public static enum Suit {
+    public enum Suit {
         SPADES, CLUBS, DIAMONDS, HEARTS
     }
 
-    public static enum Type {
+    public enum Type {
         NUMERIC, ACE, JACK, QUEEN, KING
     }
 
-    private int value;
-    private Sprite sprite;
-    private Suit suit;
-    private Type type;
+    private final static double CARD_SCALE = 0.5;
+    public final static Sprite back = new Sprite("src/main/resources/Images/Cards/blue_back.png");
+
+    private final int value;
+    private final Sprite sprite;
+    private final Suit suit;
+    private final Type type;
 
     public Card(int value, Suit suit, Type type, String code) {
         this.value = value;
@@ -63,6 +66,10 @@ public class Card {
 
     public int getValue() {
         return value;
+    }
+
+    public Sprite getSprite() {
+        return sprite;
     }
 
     @Override

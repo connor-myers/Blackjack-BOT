@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Sprite {
-    BufferedImage image;
+    private final BufferedImage image;
 
     public Sprite(String imagePath) {
         this.image = loadImage(imagePath);
@@ -20,5 +20,9 @@ public class Sprite {
         }
         // if all else fails, use error sprite
         return loadImage("src/main/resources/Images/error.png");
+    }
+
+    public BufferedImage getImage() {
+        return image;
     }
 }

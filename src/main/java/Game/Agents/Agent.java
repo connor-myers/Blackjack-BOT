@@ -9,8 +9,9 @@ import java.util.List;
 
 public abstract class Agent {
 
-    private int id;
+    private final int id;
     private List<Card> hand;
+    private boolean sitting;
 
     public Agent(int id, String hand) {
         this.id = id;

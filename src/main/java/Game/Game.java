@@ -10,18 +10,18 @@ import Game.Cards.Deck;
 
 public class Game {
 
-    public static enum Turn {
+    public enum Turn {
         PLAYER_TURN,
         DEALER_TURN
     }
 
-    private int gameId;
-    private Deck deck;
-    private Player player;
-    private Dealer dealer;
-    private Turn turn;
-    private int numTurns;
-    private boolean gameOver;
+    private final int gameId;
+    private final Deck deck;
+    private final Player player;
+    private final Dealer dealer;
+    private final Turn turn;
+    private final int numTurns;
+    private final boolean gameOver;
 
     // creating a new game
     public Game(int gameId) {
