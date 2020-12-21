@@ -20,6 +20,7 @@ public class DeckDAO {
             rs.next();
             val = rs.getInt("MAX(DeckId) + 1");
             rs.close();
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -34,12 +35,13 @@ public class DeckDAO {
         try {
             Statement st = con.createStatement();
             st.executeUpdate(query);
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public static Deck retrieveDeck(int deckId) {
+    public static Deck loadDeck(int deckId) {
         Deck deck = null;
         String query = String.format("SELECT * FROM Deck WHERE DeckId = %d", deckId);
         Connection con = DatabaseManager.getConnection();
@@ -48,6 +50,8 @@ public class DeckDAO {
             ResultSet rs = st.executeQuery(query);
             rs.next();
             deck = new Deck(deckId, rs.getString("AvailableCards"), rs.getString("DealtCards"));
+            rs.close();
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -62,6 +66,7 @@ public class DeckDAO {
         try {
             Statement st = con.createStatement();
             st.executeUpdate(query);
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

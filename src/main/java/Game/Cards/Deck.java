@@ -72,9 +72,11 @@ public class Deck {
 
     public static List<Card> stringToCards(String codedCards) {
         List<Card> cards = new ArrayList<>();
-        String[] codedCardsSplit = codedCards.split(",");
-        for (String codedCard : codedCardsSplit) {
-            cards.add(decodeCardFromString(codedCard));
+        if (codedCards != null) {
+            String[] codedCardsSplit = codedCards.split(",");
+            for (String codedCard : codedCardsSplit) {
+                cards.add(decodeCardFromString(codedCard));
+            }
         }
 
         return cards;
