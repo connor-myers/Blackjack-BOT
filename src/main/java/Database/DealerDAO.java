@@ -1,6 +1,6 @@
 package Database;
 
-import Game.Agents.Player;
+import Game.Agents.Dealer;
 import Game.Cards.Deck;
 import Managers.DatabaseManager;
 
@@ -9,17 +9,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class PlayerDAO {
+public class DealerDAO {
 
-    public static int getNextPlayerId() {
+    public static int getNextDealerId() {
         int val = -1;
         Connection con = DatabaseManager.getConnection();
         try {
             Statement st = con.createStatement();
-            String query = "SELECT MAX(PlayerId) + 1 FROM Player;";
+            String query = "SELECT MAX(DealerId) + 1 FROM Dealer;";
             ResultSet rs = st.executeQuery(query);
             rs.next();
-            val = rs.getInt("MAX(PlayerId) + 1");
+            val = rs.getInt("MAX(DealerId) + 1");
             rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -28,9 +28,9 @@ public class PlayerDAO {
         return val;
     }
 
-    public static void savePlayer(Player player) {
-        String query = String.format("INSERT INTO `Player`(`PlayerId`,`Cards`,`Bet`, `Balance`) VALUES (%d, %s, %d, %d);",
-                player.getId(), Deck.cardsToString(player.getHand()), player.getBet(), player.getBalance());
+    public static void saveDealer(Dealer dealer) {
+        String query = String.format("INSERT INTO `Dealer`(`DealerId`,`Cards`) VALUES (%d, %s);",
+                dealer.getId(), Deck.cardsToString(dealer.getHand()));
         Connection con = DatabaseManager.getConnection();
         try {
             Statement st = con.createStatement();
@@ -41,27 +41,27 @@ public class PlayerDAO {
         }
     }
 
-    public static Player loadPlayer(int playerId) {
-        Player player = null;
-        String query = String.format("SELECT * FROM Player WHERE PlayerId = %d", playerId);
+    public static Dealer loadDealer(int dealerId) {
+        Dealer dealer = null;
+        String query = String.format("SELECT * FROM Dealer WHERE DealerId = %d", dealerId);
         Connection con = DatabaseManager.getConnection();
         try {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
             rs.next();
-            player = new Player(playerId, rs.getString("Cards"), rs.getInt("Bet"), rs.getInt("Balance"));
+            dealer = new Dealer(dealerId, rs.getString("Cards"));
             rs.close();
             con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return player;
+        return dealer;
     }
 
-    public static void updatePlayer(Player player) {
-        String query = String.format("UPDATE Player SET Cards=%s, Bet=%d, Balance=%d WHERE PlayerId = %d",
-                Deck.cardsToString(player.getHand()), player.getBet(), player.getBalance(), player.getId());
+    public static void updateDealer(Dealer dealer) {
+        String query = String.format("UPDATE Dealer SET Cards=%s WHERE DealerId = %d",
+                Deck.cardsToString(dealer.getHand()), dealer.getId());
         Connection con = DatabaseManager.getConnection();
         try {
             Statement st = con.createStatement();
