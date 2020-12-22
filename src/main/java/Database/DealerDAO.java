@@ -29,7 +29,7 @@ public class DealerDAO {
     }
 
     public static void saveDealer(Dealer dealer) {
-        String query = String.format("INSERT INTO `Dealer`(`DealerId`,`Cards`, `Sitting`) VALUES (%d, %s, %d);",
+        String query = String.format("INSERT INTO `Dealer`(`DealerId`,`Cards`, `Sitting`) VALUES (%d, \"%s\", %d);",
                 dealer.getId(), Deck.cardsToString(dealer.getHand()), Boolean.compare(dealer.isSitting(), false));
         Connection con = DatabaseManager.getConnection();
         try {

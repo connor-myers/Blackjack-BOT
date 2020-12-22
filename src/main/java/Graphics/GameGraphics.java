@@ -18,7 +18,7 @@ public class GameGraphics extends Scene {
             Card card = hand.get(i);
             this.addSprite(card.getSprite(), calculateX(card.getSprite(),
                     i,
-                    hand.size()), (int) Math.floor(0.9 * this.getHeight() - card.getSprite().getImage().getHeight()));
+                    hand.size()), (int) Math.floor(0.95 * this.getHeight() - card.getSprite().getImage().getHeight()));
         }
     }
 
@@ -26,7 +26,7 @@ public class GameGraphics extends Scene {
         for (int i = 0; i < hand.size(); i++) {
             Card card = hand.get(i);
             Sprite sprite = card.getSprite();
-            if (turnNumber < 3 && i == 0) {
+            if (turnNumber < 2 && i == 0) {
                 sprite = Card.back;
             }
             if (i != 0 && !playerSitting) {
@@ -42,6 +42,6 @@ public class GameGraphics extends Scene {
     private int calculateX(Sprite card, int i, int numCards) {
         int midPoint = this.getWidth() / 2;
         double half = 0.5 * card.getImage().getWidth();
-        return (int) Math.floor(midPoint - (numCards * half) + (2.1 * i * half));
+        return (int) Math.floor(midPoint - (numCards * half) + (2.0 * i * half));
     }
 }

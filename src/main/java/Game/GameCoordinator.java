@@ -37,11 +37,10 @@ public class GameCoordinator {
 
         // what turn is this?
         switch (game.getNumTurns()) {
-            case 0 -> firstTurn(game);
-            case 1 -> secondTurn(game);
-            case 2 -> thirdTurn(game);
-            case 3 -> forthTurn(game);
-            case 4 -> fifthTurn(game);
+            case 0 -> firstPost(game);
+            case 1 -> secondPost(game);
+            case 2 -> thirdPost(game);
+            case 3 -> fourthPost(game);
         }
 
         // generate graphics
@@ -58,14 +57,7 @@ public class GameCoordinator {
         System.out.println(postText.toString());
     }
 
-    private static void firstTurn(Game game) {
-        // player places a random bet
-        int amount = game.getPlayer().makeBet();
-        postText.append(String.format("The Player has bet $%d!", amount));
-        game.setNextTurn();
-    }
-
-    private static void secondTurn(Game game) {
+    private static void firstPost(Game game) {
         // dealer deals one card to player, and then one face-down card to themself
         // deal card to player
         Card cardToPlayer = game.getDeck().dealCard();
@@ -77,7 +69,7 @@ public class GameCoordinator {
         game.setNextTurn();
     }
 
-    private static void thirdTurn(Game game) {
+    private static void secondPost(Game game) {
         // player is dealt a second card and the dealer deals another face-down card. Their first card is then visible
         Card cardToPlayer = game.getDeck().dealCard();
         game.getPlayer().getHand().add(cardToPlayer);
@@ -88,7 +80,7 @@ public class GameCoordinator {
         game.setNextTurn();
     }
 
-    public static void forthTurn(Game game) {
+    public static void thirdPost(Game game) {
         // if we have 21, just stand no matter what
         if (game.getPlayer().maxValue() == 21) {
             stand(game);
@@ -105,7 +97,7 @@ public class GameCoordinator {
         }
     }
 
-    public static void fifthTurn(Game game) {
+    public static void fourthPost(Game game) {
         // If dealer is below 16, hit until they are above 16. Check for bust.
         // check for dealer victory (if immediate). If above 16, increment turn count
         Card cardToDealer = game.getDeck().dealCard();

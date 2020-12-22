@@ -29,7 +29,7 @@ public class PlayerDAO {
     }
 
     public static void savePlayer(Player player) {
-        String query = String.format("INSERT INTO `Player`(`PlayerId`,`Cards`, `Sitting`, `Bet`, `Balance`) VALUES (%d, %s, %d, %d, %d);",
+        String query = String.format("INSERT INTO `Player`(`PlayerId`,`Cards`, `Sitting`, `Bet`, `Balance`) VALUES (%d, \"%s\", %d, %d, %d);",
                 player.getId(), Deck.cardsToString(player.getHand()), Boolean.compare(player.isSitting(), false), player.getBet(), player.getBalance());
         Connection con = DatabaseManager.getConnection();
         try {
