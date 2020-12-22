@@ -2,7 +2,6 @@ package Database;
 
 import Game.Agents.Player;
 import Game.Cards.Deck;
-import Managers.DatabaseManager;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
