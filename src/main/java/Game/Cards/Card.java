@@ -15,7 +15,7 @@ public class Card {
     }
 
     private final static double CARD_SCALE = 0.5;
-    public final static Sprite back = new Sprite("src/main/resources/Images/Cards/blue_back.png");
+    public final static Sprite back = new Sprite("src/main/resources/Images/Cards/blue_back.png", CARD_SCALE);
 
     private final int value;
     private final Sprite sprite;
@@ -26,7 +26,7 @@ public class Card {
         this.value = value;
         this.suit = suit;
         this.type = type;
-        this.sprite = new Sprite("src/main/resources/Images/Cards/" + code + ".png");
+        this.sprite = new Sprite("src/main/resources/Images/Cards/" + code + ".png", CARD_SCALE);
     }
 
     public static Card decodeCardFromString(String code) {

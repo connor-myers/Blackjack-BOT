@@ -2,6 +2,7 @@ package Game;
 
 import Database.GameDAO;
 import Game.Cards.Card;
+import Graphics.GameGraphics;
 import Utility.RandomUtility;
 
 import java.util.Random;
@@ -14,7 +15,7 @@ public class GameCoordinator {
     private static enum PlayerChoices {
         HIT,
         STAND,
-        DOUBLE_DOWN
+        //DOUBLE_DOWN
     }
     private static enum GameOverStatus {
         NOT_OVER,
@@ -46,6 +47,7 @@ public class GameCoordinator {
         }
 
         // generate graphics
+        GameGraphics gameGraphics = new GameGraphics(game);
 
         // Post to facebook
 
@@ -94,20 +96,20 @@ public class GameCoordinator {
             stand(game);
             return;
         }
-        // check if we've lost
-        GameOverStatus status = checkGameOver(game);
-        if (status != GameOverStatus.NOT_OVER) {
-            game.setGameOver();
-            System.out.println(status);
-            return;
-        }
+//        // check if we've lost
+//        GameOverStatus status = checkGameOver(game);
+//        if (status != GameOverStatus.NOT_OVER && game.getPlayer().getHand().size() != 2) {
+//            game.setGameOver();
+//            System.out.println(status);
+//            return;
+//        }
         Random rand = new Random();
         // get random choice
         PlayerChoices choice = PlayerChoices.values()[rand.nextInt(PlayerChoices.values().length)];
         switch (choice) {
             case HIT -> hit(game);
             case STAND -> stand(game);
-            case DOUBLE_DOWN -> doubleDown(game);
+            //case DOUBLE_DOWN -> doubleDown(game);
         }
     }
 
@@ -133,6 +135,9 @@ public class GameCoordinator {
         if (status != GameOverStatus.NOT_OVER) {
             game.setGameOver();
         }
+//        if (game.getDealer().maxValue() > 21) {
+//            game.setGameOver();
+//        }
         // continue the sixth turn until over
     }
 
@@ -141,6 +146,10 @@ public class GameCoordinator {
         System.out.println("hit");
         Card cardToPlayer = game.getDeck().dealCard();
         game.getPlayer().getHand().add(cardToPlayer);
+        // check if we busted because of hit
+        if (game.getPlayer().maxValue() > 21) {
+            game.setGameOver();
+        }
     }
 
     private static void stand(Game game) {
@@ -163,15 +172,18 @@ public class GameCoordinator {
     private static GameOverStatus checkGameOver(Game game) {
         int dealerMaxVal = game.getDealer().maxValue();
         int playerMaxVal = game.getPlayer().maxValue();
+        if (dealerMaxVal > 21) {
+            return GameOverStatus.PLAYER_WINS;
+        }
         if (dealerMaxVal >= DEALER_MUST_STAND_VAL) {
-            if (dealerMaxVal > playerMaxVal) {
+            if (dealerMaxVal > playerMaxVal && dealerMaxVal <= 21) {
                 postText.append("House wins!");
                 return GameOverStatus.HOUSE_WINS;
             } else if (dealerMaxVal == playerMaxVal) {
                 postText.append("Draw!");
                 return GameOverStatus.DRAW;
             }
-            else if (dealerMaxVal < playerMaxVal) {
+            else if (dealerMaxVal < playerMaxVal && playerMaxVal <= 21) {
                 postText.append("Player wins!");
                 return GameOverStatus.PLAYER_WINS;
             }

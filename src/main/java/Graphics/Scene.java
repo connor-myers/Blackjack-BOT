@@ -23,16 +23,12 @@ public abstract class Scene {
         g.fillRect ( 0, 0, stage.getWidth(), stage.getHeight());
     }
 
-    public void addSprite(Sprite sprite, int x, int y, double scaleFactor) {
-        BufferedImage tmp = Scalr.resize(sprite.getImage(),
-                Scalr.Method.BALANCED,
-                (int) Math.floor(sprite.getImage().getWidth() * scaleFactor),
-                (int) Math.floor(sprite.getImage().getHeight() * scaleFactor));
-        g.drawImage(tmp,
+    public void addSprite(Sprite sprite, int x, int y) {
+        g.drawImage(sprite.getImage(),
                 x,
                 y,
-                tmp.getWidth(null),
-                tmp.getHeight(null),
+                sprite.getImage().getWidth(null),
+                sprite.getImage().getHeight(null),
                 null);
     }
 
