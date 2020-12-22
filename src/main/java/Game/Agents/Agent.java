@@ -15,6 +15,7 @@ public abstract class Agent {
     public Agent(int id, String hand, boolean sitting) {
         this.id = id;
         this.hand = Deck.stringToCards(hand);
+        this.sitting = sitting;
     }
 
     public Agent(int id) {
@@ -57,6 +58,10 @@ public abstract class Agent {
     public boolean isBust() {
         int val = maxValue();
         return val > 21;
+    }
+
+    public void sit() {
+        this.sitting = true;
     }
 
     public int getId() {

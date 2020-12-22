@@ -154,6 +154,7 @@ public class GameCoordinator {
 
     private static void stand(Game game) {
         System.out.println("stand");
+        game.getPlayer().sit();
         // increment the turn count so we stop looping over 4th turn
         game.setNextTurn();
     }

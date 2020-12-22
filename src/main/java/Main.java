@@ -21,7 +21,7 @@ public class Main {
 ////                e.printStackTrace();
 ////            }
 //        }
-        GameCoordinator.play();
+          GameCoordinator.play();
 //        System.out.println(RandomUtility.dist.getSupportUpperBound());
 //        for (int i = 0; i < 100; i++) {
 //            System.out.println(RandomUtility.getRandomLogNormal());
