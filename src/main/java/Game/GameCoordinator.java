@@ -3,7 +3,6 @@ package Game;
 import Database.GameDAO;
 import Game.Cards.Card;
 import Graphics.GameGraphics;
-import Utility.RandomUtility;
 
 import java.util.Random;
 
@@ -43,7 +42,6 @@ public class GameCoordinator {
             case 2 -> thirdTurn(game);
             case 3 -> forthTurn(game);
             case 4 -> fifthTurn(game);
-            case 5 -> sixthTurn(game);
         }
 
         // generate graphics
@@ -96,13 +94,7 @@ public class GameCoordinator {
             stand(game);
             return;
         }
-//        // check if we've lost
-//        GameOverStatus status = checkGameOver(game);
-//        if (status != GameOverStatus.NOT_OVER && game.getPlayer().getHand().size() != 2) {
-//            game.setGameOver();
-//            System.out.println(status);
-//            return;
-//        }
+
         Random rand = new Random();
         // get random choice
         PlayerChoices choice = PlayerChoices.values()[rand.nextInt(PlayerChoices.values().length)];
@@ -114,18 +106,6 @@ public class GameCoordinator {
     }
 
     public static void fifthTurn(Game game) {
-        // dealer reveals next card.
-        // check for dealer victory (if immediate). If not, increment turn count
-
-        GameOverStatus status = checkGameOver(game);
-        if (status == GameOverStatus.NOT_OVER) {
-            game.setNextTurn();
-        } else {
-            game.setGameOver();
-        }
-    }
-
-    public static void sixthTurn(Game game) {
         // If dealer is below 16, hit until they are above 16. Check for bust.
         // check for dealer victory (if immediate). If above 16, increment turn count
         Card cardToDealer = game.getDeck().dealCard();
@@ -135,10 +115,8 @@ public class GameCoordinator {
         if (status != GameOverStatus.NOT_OVER) {
             game.setGameOver();
         }
-//        if (game.getDealer().maxValue() > 21) {
-//            game.setGameOver();
-//        }
-        // continue the sixth turn until over
+
+        // continue the fifth turn until over
     }
 
     private static void hit(Game game) {
@@ -155,6 +133,10 @@ public class GameCoordinator {
     private static void stand(Game game) {
         System.out.println("stand");
         game.getPlayer().sit();
+        GameOverStatus status = checkGameOver(game);
+        if (status != GameOverStatus.NOT_OVER) {
+            game.setGameOver();
+        }
         // increment the turn count so we stop looping over 4th turn
         game.setNextTurn();
     }
