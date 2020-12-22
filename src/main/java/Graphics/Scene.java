@@ -19,7 +19,7 @@ public abstract class Scene {
     public Scene() {
         stage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         g = (Graphics2D) stage.getGraphics();
-        g.setColor(Color.GREEN);
+        g.setColor(Color.BLACK);
         g.fillRect ( 0, 0, stage.getWidth(), stage.getHeight());
     }
 

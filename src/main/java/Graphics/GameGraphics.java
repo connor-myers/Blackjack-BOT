@@ -42,6 +42,7 @@ public class GameGraphics extends Scene {
     private int calculateX(Sprite card, int i, int numCards) {
         int midPoint = this.getWidth() / 2;
         double half = 0.5 * card.getImage().getWidth();
-        return (int) Math.floor(midPoint - (numCards * half) + (2.0 * i * half));
+        double separation = numCards > 5 ? 1.25 : 2;
+        return (int) Math.floor(midPoint - (numCards * half) + (separation * i * half));
     }
 }
