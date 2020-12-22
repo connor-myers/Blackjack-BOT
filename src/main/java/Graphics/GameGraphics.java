@@ -16,9 +16,12 @@ public class GameGraphics extends Scene {
     private void drawHand(List<Card> hand) {
         for (int i = 0; i < hand.size(); i++) {
             Card card = hand.get(i);
-            this.addSprite(card.getSprite(),
-                    (int) Math.floor((double) this.getWidth() / 4 + i * 1.25 * card.getSprite().getImage().getWidth()),
-                    (int) Math.floor(0.9 * this.getHeight() - card.getSprite().getImage().getHeight()));
+//            this.addSprite(card.getSprite(),
+//                    (int) Math.floor((double) this.getWidth() / 4 + i * 1.25 * card.getSprite().getImage().getWidth()),
+//                    (int) Math.floor(0.9 * this.getHeight() - card.getSprite().getImage().getHeight()));
+            this.addSprite(card.getSprite(), calculateX(card.getSprite(),
+                    i,
+                    hand.size()), (int) Math.floor(0.9 * this.getHeight() - card.getSprite().getImage().getHeight()));
         }
     }
 
@@ -33,9 +36,18 @@ public class GameGraphics extends Scene {
                 sprite = Card.back;
             }
 
+//            this.addSprite(sprite,
+//                    (int) Math.floor((double) this.getWidth() / 4 + i * 1.25 * sprite.getImage().getWidth()),
+//                    (int) Math.floor(0.05 * this.getHeight()));
             this.addSprite(sprite,
-                    (int) Math.floor((double) this.getWidth() / 4 + i * 1.25 * sprite.getImage().getWidth()),
+                    calculateX(card.getSprite(), i, hand.size()),
                     (int) Math.floor(0.05 * this.getHeight()));
         }
+    }
+
+    private int calculateX(Sprite card, int i, int numCards) {
+        int midPoint = this.getWidth() / 2;
+        double half = 0.5 * card.getImage().getWidth();
+        return (int) Math.floor(midPoint - (numCards * half) + (2.1 * i * half));
     }
 }
