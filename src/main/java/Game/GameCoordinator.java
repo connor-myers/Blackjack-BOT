@@ -39,7 +39,7 @@ public class GameCoordinator {
             game = new Game(gameId + 1);
         }
 
-        postText.append(String.format("Game %d, Stage %d", game.getGameId(), game.getNumTurns()));
+        postText.append(String.format("Game %d, Stage %d\n", game.getGameId(), game.getNumTurns()));
 
         // what turn is this?
         switch (game.getNumTurns()) {
@@ -135,6 +135,7 @@ public class GameCoordinator {
     }
 
     private static void hit(Game game) {
+        postText.append("The Player hits\n");
         // give the player another card
         Card cardToPlayer = game.getDeck().dealCard();
         game.getPlayer().getHand().add(cardToPlayer);
@@ -145,6 +146,7 @@ public class GameCoordinator {
     }
 
     private static void stand(Game game) {
+        postText.append("The Player has decided to sit\n");
         game.getPlayer().sit();
         GameOverStatus status = checkGameOver(game);
         if (status != GameOverStatus.NOT_OVER) {
