@@ -29,8 +29,8 @@ public class PlayerDAO {
     }
 
     public static void savePlayer(Player player) {
-        String query = String.format("INSERT INTO `Player`(`PlayerId`,`Cards`,`Bet`, `Balance`) VALUES (%d, %s, %d, %d);",
-                player.getId(), Deck.cardsToString(player.getHand()), player.getBet(), player.getBalance());
+        String query = String.format("INSERT INTO `Player`(`PlayerId`,`Cards`, `Sitting`, `Bet`, `Balance`) VALUES (%d, %s, %d, %d, %d);",
+                player.getId(), Deck.cardsToString(player.getHand()), Boolean.compare(player.isSitting(), false), player.getBet(), player.getBalance());
         Connection con = DatabaseManager.getConnection();
         try {
             Statement st = con.createStatement();
@@ -49,7 +49,7 @@ public class PlayerDAO {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
             rs.next();
-            player = new Player(playerId, rs.getString("Cards"), rs.getInt("Bet"), rs.getInt("Balance"));
+            player = new Player(playerId, rs.getString("Cards"), rs.getBoolean("Sitting"), rs.getInt("Bet"), rs.getInt("Balance"));
             rs.close();
             con.close();
         } catch (SQLException e) {
@@ -60,8 +60,8 @@ public class PlayerDAO {
     }
 
     public static void updatePlayer(Player player) {
-        String query = String.format("UPDATE Player SET Cards=%s, Bet=%d, Balance=%d WHERE PlayerId = %d",
-                Deck.cardsToString(player.getHand()), player.getBet(), player.getBalance(), player.getId());
+        String query = String.format("UPDATE Player SET Cards=\"%s\", Sitting=%d, Bet=%d, Balance=%d WHERE PlayerId = %d",
+                Deck.cardsToString(player.getHand()), Boolean.compare(player.isSitting(), false), player.getBet(), player.getBalance(), player.getId());
         Connection con = DatabaseManager.getConnection();
         try {
             Statement st = con.createStatement();

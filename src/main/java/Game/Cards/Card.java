@@ -55,7 +55,7 @@ public class Card {
 
         int val;
         switch (valCode.charAt(0)) {
-            case 'A' -> val = 1;
+            case 'A' -> val = 11; // changed from 1 to 11, hope this doesn't break the program
             case '2', '3', '4', '5', '6', '7', '8', '9' -> val = valCode.charAt(0) - '0';
             case '1', 'J', 'Q', 'K' -> val = 10;
             default -> throw new IllegalStateException("Unexpected value: " + valCode.charAt(0));
@@ -70,6 +70,14 @@ public class Card {
 
     public Sprite getSprite() {
         return sprite;
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package Game.Agents;
 
 import Game.Agents.Agent;
+import Utility.RandomUtility;
 
 public class Player extends Agent {
 
@@ -10,8 +11,8 @@ public class Player extends Agent {
     private int bet;     // the amount the player has bet
 
     // when receiving from database
-    public Player(int id, String hand, int bet, int balance) {
-        super(id, hand);
+    public Player(int id, String hand, boolean sitting, int bet, int balance) {
+        super(id, hand, sitting);
         this.bet = bet;
         this.balance = balance;
     }
@@ -31,8 +32,14 @@ public class Player extends Agent {
         return bet;
     }
 
-    // delete
+    public int makeBet() {
+       this.bet = (int) Math.floor(RandomUtility.getRandomLogNormal() * this.getBalance()) % 5; // need to save this value
+       return bet;
+    }
 
+    public void doubleDown() {
+        this.bet *= 2;
+    }
 
     public void setBalance(int balance) {
         this.balance = balance;

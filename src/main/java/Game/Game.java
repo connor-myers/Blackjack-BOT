@@ -19,9 +19,9 @@ public class Game {
     private final Deck deck;
     private final Player player;
     private final Dealer dealer;
-    private final Turn turn;
-    private final int numTurns;
-    private final boolean gameOver;
+    private Turn turn;
+    private int numTurns;
+    private boolean gameOver;
 
     // creating a new game
     public Game(int gameId) {
@@ -56,6 +56,14 @@ public class Game {
         PlayerDAO.savePlayer(this.player);
         DealerDAO.saveDealer(this.dealer);
         GameDAO.saveGame(this);
+    }
+
+    public void setGameOver() {
+        this.gameOver = true;
+    }
+
+    public void setNextTurn() {
+        this.numTurns++;
     }
 
     public int getGameId() {

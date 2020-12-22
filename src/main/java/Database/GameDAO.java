@@ -51,7 +51,7 @@ public class GameDAO {
     }
 
     public static void updateGame(Game game) {
-        String query = String.format("UPDATE Player SET Turn=%d, NumTurns=%d, GameOver=%d WHERE PlayerId = %d",
+        String query = String.format("UPDATE Game SET Turn=%d, NumTurns=%d, GameOver=%d WHERE GameId = %d",
                 game.getTurn().ordinal(), game.getNumTurns(), Boolean.compare(game.isGameOver(), false), game.getGameId());
         try {
             Connection con = DatabaseManager.getConnection();
