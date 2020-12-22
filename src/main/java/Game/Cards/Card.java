@@ -35,30 +35,76 @@ public class Card {
 
         Suit suit;
         switch (suitCode) {
-            case 'C' -> suit = CLUBS;
-            case 'D' -> suit = Suit.DIAMONDS;
-            case 'S' -> suit = Suit.SPADES;
-            case 'H' -> suit = Suit.HEARTS;
-            default -> throw new IllegalStateException("Unexpected value: " + suitCode);
+            case 'C':
+                suit = CLUBS;
+                break;
+            case 'D':
+                suit = Suit.DIAMONDS;
+                break;
+            case 'S':
+                suit = Suit.SPADES;
+                break;
+            case 'H':
+                suit = Suit.HEARTS;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + suitCode);
         }
 
         // 1 means 10 here, A means 1 (ace)
         Type type;
         switch (valCode.charAt(0)) {
-            case 'A' -> type = Type.ACE;
-            case '2', '3', '4', '5', '6', '7', '8', '9', '1' -> type = Type.NUMERIC;
-            case 'J' -> type = Type.JACK;
-            case 'Q' -> type = Type.QUEEN;
-            case 'K' -> type = Type.KING;
-            default -> throw new IllegalStateException("Unexpected value: " + valCode.charAt(0));
+            case 'A':
+                type = Type.ACE;
+                break;
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+            case '1':
+                type = Type.NUMERIC;
+                break;
+            case 'J':
+                type = Type.JACK;
+                break;
+            case 'Q':
+                type = Type.QUEEN;
+                break;
+            case 'K':
+                type = Type.KING;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + valCode.charAt(0));
         }
 
         int val;
+        // changed from 1 to 11, hope this doesn't break the program
         switch (valCode.charAt(0)) {
-            case 'A' -> val = 11; // changed from 1 to 11, hope this doesn't break the program
-            case '2', '3', '4', '5', '6', '7', '8', '9' -> val = valCode.charAt(0) - '0';
-            case '1', 'J', 'Q', 'K' -> val = 10;
-            default -> throw new IllegalStateException("Unexpected value: " + valCode.charAt(0));
+            case 'A':
+                val = 11;
+                break;
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                val = valCode.charAt(0) - '0';
+                break;
+            case '1':
+            case 'J':
+            case 'Q':
+            case 'K':
+                val = 10;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + valCode.charAt(0));
         }
 
         return new Card(val, suit, type, code);

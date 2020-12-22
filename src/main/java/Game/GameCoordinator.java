@@ -37,10 +37,18 @@ public class GameCoordinator {
 
         // what turn is this?
         switch (game.getNumTurns()) {
-            case 0 -> firstPost(game);
-            case 1 -> secondPost(game);
-            case 2 -> thirdPost(game);
-            case 3 -> fourthPost(game);
+            case 0:
+                firstPost(game);
+                break;
+            case 1:
+                secondPost(game);
+                break;
+            case 2:
+                thirdPost(game);
+                break;
+            case 3:
+                fourthPost(game);
+                break;
         }
 
         // generate graphics
@@ -90,10 +98,14 @@ public class GameCoordinator {
         Random rand = new Random();
         // get random choice
         PlayerChoices choice = PlayerChoices.values()[rand.nextInt(PlayerChoices.values().length)];
+        //case DOUBLE_DOWN -> doubleDown(game);
         switch (choice) {
-            case HIT -> hit(game);
-            case STAND -> stand(game);
-            //case DOUBLE_DOWN -> doubleDown(game);
+            case HIT:
+                hit(game);
+                break;
+            case STAND:
+                stand(game);
+                break;
         }
     }
 
