@@ -59,7 +59,6 @@ public class PlayerDAO {
     }
 
     public static void updatePlayer(Player player) {
-        System.out.println(player.isSitting());
         String query = String.format("UPDATE Player SET Cards=\"%s\", Sitting=%d, Bet=%d, Balance=%d WHERE PlayerId = %d",
                 Deck.cardsToString(player.getHand()), Boolean.compare(player.isSitting(), false), player.getBet(), player.getBalance(), player.getId());
         Connection con = DatabaseManager.getConnection();

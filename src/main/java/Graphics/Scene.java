@@ -48,4 +48,8 @@ public abstract class Scene {
     public int getHeight() {
         return height;
     }
+
+    public BufferedImage getStage() {
+        return stage;
+    }
 }

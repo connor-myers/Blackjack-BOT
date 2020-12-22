@@ -1,9 +1,13 @@
 package Game;
 
 import Database.GameDAO;
+import Facebook.FacebookManager;
+import Facebook.FacebookPost;
 import Game.Cards.Card;
 import Graphics.GameGraphics;
+import Utility.ConfigUtility;
 
+import java.util.Properties;
 import java.util.Random;
 
 import static Game.Agents.Dealer.DEALER_MUST_STAND_VAL;
@@ -35,6 +39,8 @@ public class GameCoordinator {
             game = new Game(gameId + 1);
         }
 
+        postText.append(String.format("Game %d, Stage %d", game.getGameId(), game.getNumTurns()));
+
         // what turn is this?
         switch (game.getNumTurns()) {
             case 0:
@@ -55,6 +61,12 @@ public class GameCoordinator {
         GameGraphics gameGraphics = new GameGraphics(game);
 
         // Post to facebook
+        Properties config = ConfigUtility.loadProperties("config.properties");
+        FacebookManager fbManager = new FacebookManager((String) config.get("access_token"), (String) config.get("page_id"));
+        FacebookPost post = new FacebookPost();
+        post.setImageContent(gameGraphics.getStage());
+        post.setTextContent(postText.toString());
+        fbManager.postImageWithText(post);
 
         // save
         if (game.getNumTurns() == 1) {
@@ -62,7 +74,6 @@ public class GameCoordinator {
         } else {
             game.update();
         }
-        System.out.println(postText.toString());
     }
 
     private static void firstPost(Game game) {
@@ -125,7 +136,6 @@ public class GameCoordinator {
 
     private static void hit(Game game) {
         // give the player another card
-        System.out.println("hit");
         Card cardToPlayer = game.getDeck().dealCard();
         game.getPlayer().getHand().add(cardToPlayer);
         // check if we busted because of hit
@@ -135,7 +145,6 @@ public class GameCoordinator {
     }
 
     private static void stand(Game game) {
-        System.out.println("stand");
         game.getPlayer().sit();
         GameOverStatus status = checkGameOver(game);
         if (status != GameOverStatus.NOT_OVER) {
@@ -146,7 +155,6 @@ public class GameCoordinator {
     }
 
     private static void doubleDown(Game game) {
-        System.out.println("double");
         // deal another card to player
         Card cardToPlayer = game.getDeck().dealCard();
         game.getPlayer().getHand().add(cardToPlayer);
@@ -164,14 +172,11 @@ public class GameCoordinator {
         }
         if (dealerMaxVal >= DEALER_MUST_STAND_VAL) {
             if (dealerMaxVal > playerMaxVal && dealerMaxVal <= 21) {
-                postText.append("House wins!");
                 return GameOverStatus.HOUSE_WINS;
             } else if (dealerMaxVal == playerMaxVal) {
-                postText.append("Draw!");
                 return GameOverStatus.DRAW;
             }
             else if (dealerMaxVal < playerMaxVal && playerMaxVal <= 21) {
-                postText.append("Player wins!");
                 return GameOverStatus.PLAYER_WINS;
             }
         }

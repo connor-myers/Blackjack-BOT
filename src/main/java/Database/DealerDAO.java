@@ -67,7 +67,6 @@ public class DealerDAO {
             st.executeUpdate(query);
             con.close();
         } catch (SQLException e) {
-            System.out.println(query);
             e.printStackTrace();
         }
     }
